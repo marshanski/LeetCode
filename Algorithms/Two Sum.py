@@ -13,38 +13,10 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        length = len(nums)
-        for i in range(length-1):
-            right = binary_search(nums[i+1:],target-nums[i])
-            if(right!=-1):
-                return [i,right+1+i]
+        storage = {}
+        for i in range(len(nums)):
+            value = storage.get(target-nums[i])
+            if(value !=None):
+                return [value,i]
+            storage.update({nums[i]:i})
         return []
-
-
-def binary_search(arr, x):
-    low = 0
-    high = len(arr) - 1
-    mid = 0
-    if arr[low] ==x:
-        return low
-    if arr[high] ==x:
-        return high
- 
-    while low <= high:
- 
-        mid = (high + low) // 2
- 
-        # If x is greater, ignore left half
-        if arr[mid] < x:
-            low = mid + 1
- 
-        # If x is smaller, ignore right half
-        elif arr[mid] > x:
-            high = mid - 1
- 
-        # means x is present at mid
-        else:
-            return mid
- 
-    # If we reach here, then the element was not present
-    return -1
